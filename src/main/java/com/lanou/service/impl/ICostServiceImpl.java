@@ -1,7 +1,7 @@
 package com.lanou.service.impl;
 
 import com.lanou.bean.Cost;
-import com.lanou.mapper.CostMapper;
+//import com.lanou.mapper.CostMapper;
 import com.lanou.service.ICostService;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +14,11 @@ import java.util.List;
 @Service
 public class ICostServiceImpl implements ICostService {
 
-    @Resource
-    private CostMapper costMapper;
+//    @Resource
+//    private CostMapper costMapper;
 
     public List<Cost> listCostInfo() {
+
 
 
 

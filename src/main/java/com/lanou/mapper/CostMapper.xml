@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lanou.mapper.CostMapper">
   <resultMap id="BaseResultMap" type="com.lanou.bean.Cost">
-    <result column="cost_id" jdbcType="INTEGER" property="costId" />
+    <id column="cost_id" jdbcType="INTEGER" property="costId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="base_duration" jdbcType="INTEGER" property="baseDuration" />
     <result column="base_cost" jdbcType="INTEGER" property="baseCost" />
@@ -13,6 +13,20 @@
     <result column="startime" jdbcType="TIMESTAMP" property="startime" />
     <result column="cost_type" jdbcType="CHAR" property="costType" />
   </resultMap>
+  <sql id="Base_Column_List">
+    cost_id, name, base_duration, base_cost, unit_cost, status, descr, creatime, startime, 
+    cost_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cost
+    where cost_id = #{costId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cost
+    where cost_id = #{costId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.lanou.bean.Cost">
     insert into cost (cost_id, name, base_duration, 
       base_cost, unit_cost, status, 
@@ -90,4 +104,50 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lanou.bean.Cost">
+    update cost
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="baseDuration != null">
+        base_duration = #{baseDuration,jdbcType=INTEGER},
+      </if>
+      <if test="baseCost != null">
+        base_cost = #{baseCost,jdbcType=INTEGER},
+      </if>
+      <if test="unitCost != null">
+        unit_cost = #{unitCost,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="descr != null">
+        descr = #{descr,jdbcType=VARCHAR},
+      </if>
+      <if test="creatime != null">
+        creatime = #{creatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startime != null">
+        startime = #{startime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="costType != null">
+        cost_type = #{costType,jdbcType=CHAR},
+      </if>
+    </set>
+    where cost_id = #{costId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lanou.bean.Cost">
+    update cost
+    set name = #{name,jdbcType=VARCHAR},
+      base_duration = #{baseDuration,jdbcType=INTEGER},
+      base_cost = #{baseCost,jdbcType=INTEGER},
+      unit_cost = #{unitCost,jdbcType=INTEGER},
+      status = #{status,jdbcType=CHAR},
+      descr = #{descr,jdbcType=VARCHAR},
+      creatime = #{creatime,jdbcType=TIMESTAMP},
+      startime = #{startime,jdbcType=TIMESTAMP},
+      cost_type = #{costType,jdbcType=CHAR}
+    where cost_id = #{costId,jdbcType=INTEGER}
+  </update>
 </mapper>
